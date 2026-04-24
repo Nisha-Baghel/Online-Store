@@ -57,10 +57,6 @@
         text-align: center;
       }
 
-      .card h3 {
-        margin: 10px 0;
-      }
-
       .card button {
         background-color: #4caf50;
         color: white;
@@ -72,6 +68,18 @@
 
       .card button:hover {
         background-color: #45a049;
+      }
+
+      /* Cart Button */
+      .cart-btn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: orange;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        text-decoration: none;
       }
 
       /* Footer */
@@ -97,6 +105,8 @@
       <a href="#">Contact</a>
     </nav>
 
+    <a href="cart.html" class="cart-btn">🛍 View Cart</a>
+
     <div class="container">
       <h2>Our Products</h2>
 
@@ -104,19 +114,19 @@
         <div class="card">
           <h3>T-Shirt</h3>
           <p>₹500</p>
-          <button>Buy Now</button>
+          <button onclick="buyProduct('T-Shirt')">Buy Now</button>
         </div>
 
         <div class="card">
           <h3>Shoes</h3>
           <p>₹1000</p>
-          <button>Buy Now</button>
+          <button onclick="buyProduct('Shoes')">Buy Now</button>
         </div>
 
         <div class="card">
           <h3>Watch</h3>
           <p>₹750</p>
-          <button>Buy Now</button>
+          <button onclick="buyProduct('Watch')">Buy Now</button>
         </div>
       </div>
 
@@ -128,5 +138,15 @@
     <footer>
       <p>© 2026 My Online Store | All Rights Reserved</p>
     </footer>
+
+    <script>
+      function buyProduct(productName) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart.push(productName);
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        alert(productName + " added to cart!");
+      }
+    </script>
   </body>
 </html>

@@ -82,13 +82,15 @@
         text-decoration: none;
       }
 
-      /* Footer */
-      footer {
-        background-color: #333;
+      /* User Info */
+      .user-info {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: #333;
         color: white;
-        text-align: center;
         padding: 10px;
-        margin-top: 20px;
+        border-radius: 5px;
       }
     </style>
   </head>
@@ -103,7 +105,11 @@
       <a href="#">Home</a>
       <a href="#">Products</a>
       <a href="#">Contact</a>
+      <a href="login.html">Login</a>
     </nav>
+
+    <!-- User Info -->
+    <div class="user-info" id="userBox"></div>
 
     <a href="cart.html" class="cart-btn">🛍 View Cart</a>
 
@@ -140,12 +146,39 @@
     </footer>
 
     <script>
+      // Check login
+      let currentUser = localStorage.getItem("loggedInUser");
+      let userBox = document.getElementById("userBox");
+
+      if (currentUser) {
+        userBox.innerHTML =
+          "👤 " +
+          currentUser +
+          " <br><button onclick='logout()'>Logout</button>";
+      } else {
+        userBox.innerHTML = "Not Logged In";
+      }
+
+      // Buy Product
       function buyProduct(productName) {
+        if (!currentUser) {
+          alert("Please login first!");
+          window.location.href = "login.html";
+          return;
+        }
+
         let cart = JSON.parse(localStorage.getItem("cart")) || [];
         cart.push(productName);
         localStorage.setItem("cart", JSON.stringify(cart));
 
         alert(productName + " added to cart!");
+      }
+
+      // Logout
+      function logout() {
+        localStorage.removeItem("loggedInUser");
+        alert("Logged out!");
+        location.reload();
       }
     </script>
   </body>
